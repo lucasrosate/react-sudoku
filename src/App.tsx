@@ -10,11 +10,10 @@ const App: React.FC = () => {
 
 
     return (
-            <div className={AppStyle.appContainer}>
+            <div className={AppStyle.appContainer} id="AppMain">
                 <div className={AppStyle.title}><h1>Sudoku</h1></div>
                 <div className={AppStyle.componentsContainer} >
                     <Game />
-                    <DigitNumbers />
                 </div>
             </div>
     )

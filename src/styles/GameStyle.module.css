@@ -9,7 +9,8 @@
 
 
     margin-top: 50px;
-    margin-left: 40%;
+    /* margin-left: 40%; */
+    margin-left: auto;
     margin-right: auto;
     width: 530px;
     height: 526px;

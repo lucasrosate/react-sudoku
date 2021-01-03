@@ -1,23 +1,24 @@
 .windowContainer {
     font-family: "Lato", sans-serif;
+    margin-left: 60px;
 }
 
 .windowContainer h1 {
     margin-bottom: 20px;
-    margin-left: 10px;
+
     font-weight: 400;
     font-size: 1.4rem;
     color: var(--terciary-color);
 }
 
 .digitContainer {
-    width: 60%;
+    width: 400px;
 
-    margin-left: 10px;
+
     margin-right: auto;
     display:grid;
-    grid-template-columns: repeat(3, 130px);
-    grid-template-rows: repeat(3, 80px);
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 60px);
 
     border-radius: 5px;
     overflow: hidden;
