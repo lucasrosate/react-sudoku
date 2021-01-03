@@ -56,7 +56,6 @@ const Game: React.FC = () => {
                 const parsedKey = parseInt(event.key);
 
                 if (parsedKey > 0) {
-                    console.log(arrSudoku);
                     var newArray: Array<number[]> = arrSudoku;
                     newArray[_selectedNumber.row][_selectedNumber.column] = parsedKey;
                     setArrSudoku(newArray);
@@ -111,7 +110,7 @@ const Game: React.FC = () => {
                                             // Criar elemento react do tipo <span> e estilizar para quando selecionar e destacar quais são os inicias que não podem ser modificados
                                             return (
                                                 <div className={
-                                                     (isRowDiv === 0 && isColumnDiv === 0)? `${GameStyle.normalSPan} ${GameStyle.borderRightDown}`
+                                                     (isRowDiv === 0 && isColumnDiv === 0)? `${GameStyle.normalSpan} ${GameStyle.borderRightDown}`
                                                     :(isRowDiv !== 0 && isColumnDiv === 0) ? `${GameStyle.borderRight}`
                                                     :(isRowDiv === 0 && isColumnDiv !== 0) ? `${GameStyle.borderDown}`:`${GameStyle.innerBorder}`
                                                 }
@@ -120,7 +119,6 @@ const Game: React.FC = () => {
                                                 >
                                                     <span id={`c${indexColumn}l${indexRow}`}
                                                         className="normal-span"
-                                                        onChange={() => console.log("entrou")}
                                                         onClick={e => writeSelectedCoordinates(e, indexRow, indexColumn)}
                                                         style={spanStyle}
                                                     >
