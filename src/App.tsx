@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import AppStyle from './styles/AppStyle.module.css';
+import './styles/base.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Game from './Components/Game';
+import DigitNumbers from './Components/DigitNumbers';
+
+
+const App: React.FC = () => {
+    
+
+
+    return (
+            <div className={AppStyle.appContainer}>
+                <div className={AppStyle.title}><h1>Sudoku</h1></div>
+                <div className={AppStyle.componentsContainer} >
+                    <Game />
+                    <DigitNumbers />
+                </div>
+            </div>
+    )
 }
 
 export default App;

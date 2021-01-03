@@ -1,0 +1,49 @@
+.windowContainer {
+    font-family: "Lato", sans-serif;
+}
+
+.windowContainer h1 {
+    margin-bottom: 20px;
+    margin-left: 10px;
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: var(--terciary-color);
+}
+
+.digitContainer {
+    width: 60%;
+
+    margin-left: 10px;
+    margin-right: auto;
+    display:grid;
+    grid-template-columns: repeat(3, 130px);
+    grid-template-rows: repeat(3, 80px);
+
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.digitContainer button {
+    color: var(--text-color);
+
+    cursor: pointer;
+    font-size: 3rem;
+    font-weight: 400;
+
+    background-color: white;
+    border: none;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.digitContainer button:hover {
+    background: var(--hover-terciary-color);
+}
+
+.digitContainer button:focus {
+    outline: none;
+}

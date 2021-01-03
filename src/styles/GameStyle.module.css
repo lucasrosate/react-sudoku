@@ -1,0 +1,80 @@
+.gameContainer {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none; 
+            user-select: none;
+
+
+
+    margin-top: 50px;
+    margin-left: 40%;
+    margin-right: auto;
+    width: 530px;
+    height: 526px;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 1.8rem;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.windowContainer {
+    margin-left: 9px;
+    margin-top: 12px;
+    height: 560px;
+}
+
+.boardContainer div {
+    width: 560px;
+    overflow: hidden;
+}
+
+.boardContainer div div {
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+}
+
+.boardContainer div div:hover {
+    background-color: cyan;
+    color: rgb(134, 134, 134);
+}
+
+.boardContainer div div span {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+
+    cursor: pointer;
+}
+
+.borderRightDown {
+    border-bottom: 2px solid var(--border-color-bold);
+    border-right: 2px solid var(--border-color-bold);
+}
+
+.borderRight {
+    border-right: 2px solid var(--border-color-bold);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.borderDown {
+    border-right: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color-bold);
+}
+
+.innerBorder {
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}

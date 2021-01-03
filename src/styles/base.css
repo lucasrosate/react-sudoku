@@ -1,0 +1,22 @@
+          :root {
+             --primary-color: #214761;
+             --secondary-color: #CB7723;
+             --terciary-color: #BB3F3F;
+             --hover-color: #e6e6e6;
+             --hover-terciary-color: #fff9f9;
+             --border-color: rgb(216, 216, 216);
+             --border-color-bold: rgb(116, 114, 114);
+             --text-color: rgb(65, 65, 65);
+
+             --text-terciary-color: rgb(230, 77, 77);
+             --text-terciary-color-darker: rgb(187, 63, 63);
+             --border-terciary-color: rgb(187, 62, 62, .2);
+         }
+         
+         * {
+             margin: 0;
+         }
+         
+          ::-webkit-scrollbar {
+             display: none;
+         }

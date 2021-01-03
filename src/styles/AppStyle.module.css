@@ -1,0 +1,26 @@
+.appContainer {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--primary-color);
+    position: fixed;
+}
+
+
+
+.title h1 {
+    margin-top: 30px;
+    height: 10%;
+    text-align: center;
+    color: var(--secondary-color);
+    font-family: "Lato", sans-serif;
+    font-size: 2.5rem;
+}
+
+.componentsContainer {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+
+    align-items: center;
+    justify-content: center;
+}
