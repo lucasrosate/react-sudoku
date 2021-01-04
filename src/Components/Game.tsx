@@ -1,22 +1,18 @@
 
-import { useState, useEffect, useRef, createElement } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Sudoku from '../Sudoku';
 
 import GameStyle from '../styles/GameStyle.module.css';
 import { CSSProperties } from 'styled-components';
 
-
 interface ISelectedNumber {
     row: number,
     column: number
 }
-
 const Game: React.FC = () => {
-    const sudo = new Sudoku("hard");
-
-    // Inicializando o array 2D do tabuleiro
-    var [arrSudoku, setArrSudoku] = useState<Array<number[]>>(sudo.arr);
+    var sudo = new Sudoku("hard");
+    var initialValues: number[][];
 
     // Solução achada para que o EventListener leia o state selectedNumber atualizado
     var [selectedNumber, _setselectedNumber] = useState<ISelectedNumber>({ row: 0, column: 0 })
@@ -28,6 +24,14 @@ const Game: React.FC = () => {
     }
     // ---------
 
+    // Inicializando o array 2D do tabuleiro (mesma solução abaixo)
+    var [arrSudoku, _setArrSudoku] = useState<number[][]>([[0]]);
+    const arrSudokuRef = useRef(arrSudoku);
+
+    const setArrSudoku = (data: number[][]) => {
+        arrSudokuRef.current = data;
+        _setArrSudoku(data);
+    }
 
 
     // Função para obter as coordenadas da casa selecionada pelo usuário
@@ -45,28 +49,28 @@ const Game: React.FC = () => {
 
     // Função para os números se digitados pelo teclado
     const addEventKeyListener = () => {
+
         document.addEventListener("keydown", (event) => {
+            var newArray: Array<number[]> = arrSudokuRef.current;
             let _selectedNumber = selectedNumberRef.current;
 
             if (event.key.match(/^[0-9]+$/) != null) {
                 let _selectedNumber = selectedNumberRef.current;
 
-                console.log(_selectedNumber)
-
                 const parsedKey = parseInt(event.key);
 
+                console.log(initialValues);
                 if (parsedKey > 0) {
-                    var newArray: Array<number[]> = arrSudoku;
-                    newArray[_selectedNumber.row][_selectedNumber.column] = parsedKey;
-                    setArrSudoku(newArray);
-                    document.getElementById(`c${_selectedNumber.column}l${_selectedNumber.row}`)!.click()
-
+                    if (!(newArray[_selectedNumber.row][_selectedNumber.column] === initialValues[_selectedNumber.row][_selectedNumber.column] && newArray[_selectedNumber.row][_selectedNumber.column] !== 0)) {
+                        newArray[_selectedNumber.row][_selectedNumber.column] = parsedKey;
+                        setArrSudoku(newArray);
+                        document.getElementById(`c${_selectedNumber.column}l${_selectedNumber.row}`)!.click();
+                    }
 
                 }
             }
 
-            if(event.key === "Delete") {
-                var newArray: Array<number[]> = arrSudoku;
+            if (event.key === "Delete") {
                 newArray[_selectedNumber.row][_selectedNumber.column] = 0;
                 setArrSudoku(newArray);
                 document.getElementById(`c${_selectedNumber.column}l${_selectedNumber.row}`)!.click()
@@ -76,7 +80,14 @@ const Game: React.FC = () => {
 
     // Setando o tabuleiro para os números iniciais do jogo e adicionando o EventListener após renderizar
     useEffect(() => {
-        addEventKeyListener();
+        async function intializeGame() {
+            await sudo.init();
+            console.log(sudo.solution());
+            setArrSudoku(sudo.solution()|| sudo.arr);
+            addEventKeyListener();
+        }
+
+        intializeGame();
     }, [])
 
     return (
@@ -88,6 +99,7 @@ const Game: React.FC = () => {
                         arrSudoku.map(((subArr: number[], indexRow: number) => {
                             return (
                                 <div>
+
                                     {
                                         subArr.map((elem: number, indexColumn: number) => {
 
@@ -95,26 +107,23 @@ const Game: React.FC = () => {
                                             const isRowDiv: number = (indexRow + 1) % 3;
                                             const isColumnDiv: number = (indexColumn + 1) % 3;
 
-                                            let innerElem = elem;
                                             const isEmpty: boolean = arrSudoku[indexRow][indexColumn] === 0;
                                             const isSelected: boolean = indexColumn === selectedNumber.column && indexRow === selectedNumber.row;
-                                            const isNonEditable: boolean = arrSudoku[indexRow][indexColumn] === sudo.arr[indexRow][indexColumn] && arrSudoku[indexRow][indexColumn] !== 0;
-
+                                            const isNonEditable: boolean = arrSudokuRef.current[indexRow][indexColumn] === sudo.arr[indexRow][indexColumn] && sudo.arr[indexRow][indexColumn] !== 0;
 
                                             const spanStyle: CSSProperties = {
                                                 backgroundColor: isSelected ? "rgb(230,230,230)" : "white",
-                                                color:  isEmpty && isSelected ? "rgb(230,230,230)" : isEmpty ? "white" : "rgb(53, 53, 53)",
-                                                fontWeight: isNonEditable ? 600 : 400
+                                                color: isNonEditable ? "blue" : isEmpty && isSelected ? "rgb(230,230,230)" : isEmpty ? "white" : "rgb(53, 53, 53)",
                                             }
 
                                             // Criar elemento react do tipo <span> e estilizar para quando selecionar e destacar quais são os inicias que não podem ser modificados
                                             return (
                                                 <div className={
-                                                     (isRowDiv === 0 && isColumnDiv === 0)? `${GameStyle.normalSpan} ${GameStyle.borderRightDown}`
-                                                    :(isRowDiv !== 0 && isColumnDiv === 0) ? `${GameStyle.borderRight}`
-                                                    :(isRowDiv === 0 && isColumnDiv !== 0) ? `${GameStyle.borderDown}`:`${GameStyle.innerBorder}`
+                                                    (isRowDiv === 0 && isColumnDiv === 0) ? `${GameStyle.normalSpan} ${GameStyle.borderRightDown}`
+                                                        : (isRowDiv !== 0 && isColumnDiv === 0) ? `${GameStyle.borderRight}`
+                                                            : (isRowDiv === 0 && isColumnDiv !== 0) ? `${GameStyle.borderDown}` : `${GameStyle.innerBorder}`
                                                 }
-                                                key={`c${indexColumn}l${indexRow}`}
+                                                    key={`c${indexColumn}l${indexRow}`}
 
                                                 >
                                                     <span id={`c${indexColumn}l${indexRow}`}
@@ -122,7 +131,7 @@ const Game: React.FC = () => {
                                                         onClick={e => writeSelectedCoordinates(e, indexRow, indexColumn)}
                                                         style={spanStyle}
                                                     >
-                                                        {innerElem}
+                                                        {elem}
                                                     </span>
                                                 </div>
 
