@@ -1,7 +1,7 @@
 //  fácil=30 médio=25 difícil = 23
 
 class Sudoku {
-    arr = [
+    arr: number[][] = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -10,16 +10,17 @@ class Sudoku {
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]
-
-    // solution: Array<number[]>;
-
-    initialNumbersCount: number;
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
 
-    constructor(difficulty: string) {
-        switch (difficulty) {
+    initialNumbersCount: number = 25;
+    difficulty: string = "medium";
+
+
+    async init() {
+
+        switch (this.difficulty) {
             case "easy":
                 this.initialNumbersCount = 23;
                 break;
@@ -36,35 +37,13 @@ class Sudoku {
                 this.initialNumbersCount = 25;
                 break;
         }
-    }
 
-
-    async init() {
         this._getInitialNumbers();
     }
 
 
-    solution() {
-        let solutionArr = this.arr;
-
-        for (let i = 0; i < 9; i++)
-            for (let j = 0; j < 9; j++) {
-                if (solutionArr[i][j] == 0) {
-                    for (let k = 1; k <= 9; k++) {
-                        if (this._possible(i, j, k)) {
-                            solutionArr[i][j] = k;
-                            this.solution()
-                            solutionArr[i][j] = 0;
-                        }
-                    }
-                    return
-                }
-            }
-        return solutionArr;
-    }
-
-
     private async _getInitialNumbers() {
+        this._reset();
 
         var countFillNumbers = 0;
         let isValid;
@@ -76,7 +55,7 @@ class Sudoku {
             randNum = Math.floor(Math.random() * 9);
 
             if (this.arr[randAddress1][randAddress2] === 0) {
-                isValid = this._possible(randAddress1, randAddress2, randNum);
+                isValid = this.possible(this.arr, randAddress1, randAddress2, randNum, false);
 
                 if (isValid) {
                     this.arr[randAddress1][randAddress2] = randNum;
@@ -86,28 +65,60 @@ class Sudoku {
         }
     }
 
-    private _possible(line: number, column: number, n: number) {
-        for (let i = 0; i < 9; i++)
-            if (this.arr[line][i] === n) return false;
-
+    possible(arr: number[][], row: number, column: number, n: number, isTest: boolean) {
+        console.log(arr, row, column)
 
         for (let i = 0; i < 9; i++)
-            if (this.arr[i][column] === n) return false;
+            if (isTest) {
+                if (i !== column)
+                    if (arr[row][i] === n) return false;
+            } else {
+                if (arr[row][i] === n) return false;
+            }
 
 
-        const minIndexRow = line > 5 ? 6 : line > 2 ? 3 : 0;
-        const maxIndexRow = line > 5 ? 8 : line > 2 ? 5 : 2;
+
+        for (let i = 0; i < 9; i++)
+            if (isTest) {
+                if (i !== row)
+                    if (arr[i][column] === n) return false;
+            } else {
+                if (arr[i][column] === n) return false;
+            }
+
+
+
+        const minIndexRow = row > 5 ? 6 : row > 2 ? 3 : 0;
+        const maxIndexRow = row > 5 ? 8 : row > 2 ? 5 : 2;
 
         const minIndexColumn = column > 5 ? 6 : column > 2 ? 3 : 0;
         const maxIndexColumn = column > 5 ? 8 : column > 2 ? 5 : 2;
 
-        for (let i = 0; i < 9; i++) {
-            for (let j = 0; j < 9; j++) {
-                if ((i >= minIndexRow && i <= maxIndexRow) && (j >= minIndexColumn && j <= maxIndexColumn) && this.arr[i][j] === n) return false;
+        for (let i = minIndexRow; i <= maxIndexRow; i++) {
+            for (let j = minIndexColumn; j <= maxIndexColumn; j++) {
+                if (isTest) {
+                    if (i !== row && j !== column)
+                        if (arr[i][j] === n) return false;
+                } else
+                    if (arr[i][j] === n) return false;
             }
         }
 
         return true;
+    }
+
+    private _reset() {
+        this.arr = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ]
     }
 }
 

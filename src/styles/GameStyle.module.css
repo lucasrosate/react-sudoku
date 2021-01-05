@@ -1,3 +1,12 @@
+.containerAll {
+    display: grid;
+    text-align: start;
+    align-items: center;
+    grid-template-columns:  2fr 1fr;
+
+}
+
+
 .gameContainer {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -78,4 +87,36 @@
 .innerBorder {
     border-right: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
+}
+
+.selectContainer {
+    display: inline-flex;
+
+    align-items: center;
+    
+    grid-template-rows: 100px 100px;
+
+    height: 50%;
+
+    font-family: "Lato", sans-serif;
+}
+
+.selectContainer label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--terciary-color);
+}
+
+.selectContainer select {
+    height: 35px;
+    width: 150px;
+    font-size: 1.1rem;
+    margin-left: 10px;
+    font-family: "Lato", sans-serif;
+
+    border-radius: 5px;
+}
+
+.selectContainer select:focus {
+    outline: none;
 }
