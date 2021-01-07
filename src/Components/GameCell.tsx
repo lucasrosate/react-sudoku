@@ -33,9 +33,7 @@ const GameCell: React.FC<Props> = (props: Props) => {
         fontWeight: isNonEditable ? 600 : 400
     }
 
-    // Criar props.elemento react do tipo <span> e estilizar para quando selecionar e destacar quais são os inicias que não podem ser modificados
-
-
+    // Criar elemento da célular de cada lacuna do sudoku, juntamente com as interações e estilos
     return (
         <>
             <div key={props.indexColumn} className={
