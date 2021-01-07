@@ -1,6 +1,6 @@
 //  fácil=30 médio=25 difícil = 23
 
-class Sudoku {
+class Sudoku implements ISudoku {
     arr: number[][] = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -66,7 +66,6 @@ class Sudoku {
     }
 
     possible(arr: number[][], row: number, column: number, n: number, isTest: boolean) {
-        console.log(arr, row, column)
 
         for (let i = 0; i < 9; i++)
             if (isTest) {

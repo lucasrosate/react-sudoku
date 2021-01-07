@@ -69,26 +69,6 @@
     cursor: pointer;
 }
 
-.borderRightDown {
-    border-bottom: 2px solid var(--border-color-bold);
-    border-right: 2px solid var(--border-color-bold);
-}
-
-.borderRight {
-    border-right: 2px solid var(--border-color-bold);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.borderDown {
-    border-right: 1px solid var(--border-color);
-    border-bottom: 2px solid var(--border-color-bold);
-}
-
-.innerBorder {
-    border-right: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
 .selectContainer {
     display: inline-flex;
 
