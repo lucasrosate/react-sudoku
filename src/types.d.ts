@@ -1,9 +1,9 @@
-interface ISelectedNumber {
+interface SelectedNumberState {
     row: number,
     column: number
 }
 
-type ISudoku = {
+type SudokuClassInterface = {
     arr: number [][],
     initialNumbersCount: number,
     difficulty: string,
@@ -11,12 +11,3 @@ type ISudoku = {
 }
 
 
-type GameCell = {
-    indexRow: number,
-    indexColumn: number,
-    elem: number
-    arrSudokuRef: RefObject<number[][]>,
-    writeSelectedCoordinates: Function,
-    selectedNumber: ISelectedNumber
-    sudo: ISudoku
-}

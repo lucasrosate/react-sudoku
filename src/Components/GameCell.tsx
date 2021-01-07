@@ -2,18 +2,28 @@ import { memo, RefObject } from 'react';
 import { CSSProperties } from 'styled-components';
 import GameCellStyle from '../styles/GameCellStyle.module.css';
 
+type Props = {
+    indexRow: number,
+    indexColumn: number,
+    elem: number
+    arrSudokuRef: RefObject<number[][]>,
+    writeSelectedCoordinates: Function,
+    selectedNumber: SelectedNumberState
+    sudo: SudokuClassInterface
+}
 
 
-const GameCell: React.FC<IGameCell> = (props: IGameCell) => {
+
+const GameCell: React.FC<Props> = (props: Props) => {
 
     // Renderizar as linhas mais destacadas de cada matriz 3x3
     const isRowDiv: number = (props.indexRow + 1) % 3;
     const isColumnDiv: number = (props.indexColumn + 1) % 3;
 
-    const isEmpty: boolean = props.arrSudokuRef.current[props.indexRow][props.indexColumn] === 0;
+    const isEmpty: boolean = props.arrSudokuRef.current![props.indexRow][props.indexColumn] === 0;
     const isSelected: boolean = props.indexColumn === props.selectedNumber.column && props.indexRow === props.selectedNumber.row;
-    const isNonEditable: boolean = props.arrSudokuRef.current[props.indexRow][props.indexColumn] === props.sudo.arr[props.indexRow][props.indexColumn] && props.sudo.arr[props.indexRow][props.indexColumn] !== 0;
-    const isPossible: boolean = isNonEditable || isEmpty ? false : props.sudo.possible(props.arrSudokuRef.current, props.indexRow, props.indexColumn, props.elem, true);
+    const isNonEditable: boolean = props.arrSudokuRef.current![props.indexRow][props.indexColumn] === props.sudo.arr[props.indexRow][props.indexColumn] && props.sudo.arr[props.indexRow][props.indexColumn] !== 0;
+    const isPossible: boolean = isNonEditable || isEmpty ? false : props.sudo.possible(props.arrSudokuRef.current!, props.indexRow, props.indexColumn, props.elem, true);
 
 
 

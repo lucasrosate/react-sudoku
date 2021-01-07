@@ -19,10 +19,10 @@ const Game: React.FC = () => {
     var tempArray;
 
     // Solução achada para que o EventListener leia o state selectedNumber atualizado
-    var [selectedNumber, _setselectedNumber] = useState<ISelectedNumber>({ row: 0, column: 0 })
+    var [selectedNumber, _setselectedNumber] = useState<SelectedNumberState>({ row: 0, column: 0 })
     const selectedNumberRef = useRef(selectedNumber);
 
-    const setSelectedNumber = (data: ISelectedNumber) => {
+    const setSelectedNumber = (data: SelectedNumberState) => {
         selectedNumberRef.current = data;
         _setselectedNumber(data);
     }

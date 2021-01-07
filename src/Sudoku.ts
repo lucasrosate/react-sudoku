@@ -1,6 +1,6 @@
 //  fácil=30 médio=25 difícil = 23
 
-class Sudoku implements ISudoku {
+class Sudoku implements SudokuClassInterface {
     arr: number[][] = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
