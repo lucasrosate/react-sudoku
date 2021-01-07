@@ -4,7 +4,7 @@ import GameCellStyle from '../styles/GameCellStyle.module.css';
 
 
 
-const GameCell: React.FC<GameCell> = (props: GameCell) => {
+const GameCell: React.FC<IGameCell> = (props: IGameCell) => {
 
     // Renderizar as linhas mais destacadas de cada matriz 3x3
     const isRowDiv: number = (props.indexRow + 1) % 3;
