@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 import Sudoku from '../Sudoku';
 
@@ -15,8 +15,7 @@ sudo.init();
 
 const Game: React.FC = () => {
 
-    // array que o State usa como referência
-    var tempArray;
+
 
     // Solução achada para que o EventListener leia o state selectedNumber atualizado
     var [selectedNumber, _setselectedNumber] = useState<SelectedNumberState>({ row: 0, column: 0 })
@@ -46,10 +45,8 @@ const Game: React.FC = () => {
         _setArrSudoku(data);
     }
 
-
-
     // Função para os números se digitados pelo teclado
-    const addEventKeyListener = () => {
+    const addEventKeyListener = useCallback(() => {
 
         document.addEventListener("keydown", (event) => {
             var newArray: Array<number[]> = arrSudokuRef.current;
@@ -67,22 +64,49 @@ const Game: React.FC = () => {
                         document.getElementById(`c${_selectedNumber.column}l${_selectedNumber.row}`)!.click();
                     }
                 }
+
             }
 
-            if (event.key === "Delete") {
-                newArray[_selectedNumber.row][_selectedNumber.column] = 0;
-                setArrSudoku(newArray);
-                document.getElementById(`c${_selectedNumber.column}l${_selectedNumber.row}`)!.click()
+            switch (event.key) {
+                case "Delete":
+                    newArray[_selectedNumber.row][_selectedNumber.column] = 0;
+                    setArrSudoku(newArray);
+                    break;
+
+                case "ArrowUp":
+                    console.log(selectedNumberRef.current.row)
+                    _selectedNumber.row = _selectedNumber.row === 0 ? 8 : _selectedNumber.row - 1;
+                    setSelectedNumber({ row: _selectedNumber.row, column: _selectedNumber.column });
+                    break;
+
+                case "ArrowDown":
+                    console.log(selectedNumberRef.current.row)
+                    _selectedNumber.row = _selectedNumber.row === 8 ? 0 : _selectedNumber.row + 1;
+                    setSelectedNumber({ row: _selectedNumber.row, column: _selectedNumber.column });
+                    break;
+
+                case "ArrowLeft":
+                    console.log(selectedNumberRef.current.column)
+                    _selectedNumber.column = _selectedNumber.column === 0 ? 8 : _selectedNumber.column - 1;
+                    setSelectedNumber({ row: _selectedNumber.row, column: _selectedNumber.column });
+                    break;
+
+                case "ArrowRight":
+                    _selectedNumber.column = _selectedNumber.column === 8 ? 0 : _selectedNumber.column + 1;
+                    setSelectedNumber({ row: _selectedNumber.row, column: _selectedNumber.column });
+                    break;
+
             }
+
+            document.getElementById(`c${_selectedNumber.column}l${_selectedNumber.row}`)!.click()
         })
-    }
+    }, [])
 
-    const handleDifficultyChange = (selectValue: string) => {
+    const handleDifficultyChange = useCallback((selectValue: string) => {
         sudo.difficulty = selectValue;
         sudo.init();
-        tempArray = JSON.parse(JSON.stringify(sudo.arr));
-        setArrSudoku(tempArray);;
-    }
+        setArrSudoku(JSON.parse(JSON.stringify(sudo.arr)));
+    }, [])
 
     // Função para obter as coordenadas da casa selecionada pelo usuário
     const writeSelectedCoordinates = (e: any, indexRow: number, indexColumn: number) => {
@@ -98,14 +122,9 @@ const Game: React.FC = () => {
 
     // Setando o tabuleiro para os números iniciais do jogo e adicionando o EventListener após renderizar
     useEffect(() => {
-        async function intializeGame() {
-            tempArray = JSON.parse(JSON.stringify(sudo.arr));
-            setArrSudoku(tempArray);
-            addEventKeyListener();
-        }
-
-        intializeGame();
-    }, [])
+        handleDifficultyChange("medium");
+        addEventKeyListener()
+    }, [handleDifficultyChange, addEventKeyListener])
 
     return (
         <div className={GameStyle.containerAll}>
@@ -118,16 +137,17 @@ const Game: React.FC = () => {
                                 return (
                                     <div key={indexRow}>
                                         {
-                                            subArr.map((elem: number, indexColumn: number) => 
-                                            <GameCell 
-                                            indexRow={indexRow}
-                                            indexColumn={indexColumn}
-                                            elem={elem}
-                                            arrSudokuRef={arrSudokuRef}
-                                            writeSelectedCoordinates={writeSelectedCoordinates}
-                                            selectedNumber={selectedNumber}
-                                            sudo={sudo}
-                                            />)
+                                            subArr.map((elem: number, indexColumn: number) =>
+                                                <GameCell
+                                                    key={indexColumn}
+                                                    indexRow={indexRow}
+                                                    indexColumn={indexColumn}
+                                                    elem={elem}
+                                                    arrSudokuRef={arrSudokuRef}
+                                                    writeSelectedCoordinates={writeSelectedCoordinates}
+                                                    selectedNumber={selectedNumber}
+                                                    sudo={sudo}
+                                                />)
                                         }
 
                                     </div>

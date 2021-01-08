@@ -33,16 +33,14 @@ const GameCell: React.FC<Props> = (props: Props) => {
         fontWeight: isNonEditable ? 600 : 400
     }
 
-    // Criar elemento da célular de cada lacuna do sudoku, juntamente com as interações e estilos
+    // Criar elemento da célular de cada lacuna do sudoku, juntamente com as interações e estilosg
     return (
         <>
-            <div key={props.indexColumn} className={
+            <div className={
                 (isRowDiv === 0 && isColumnDiv === 0) ? `${GameCellStyle.normalSpan} ${GameCellStyle.borderRightDown}`
                     : (isRowDiv !== 0 && isColumnDiv === 0) ? `${GameCellStyle.borderRight}`
                         : (isRowDiv === 0 && isColumnDiv !== 0) ? `${GameCellStyle.borderDown}` : `${GameCellStyle.innerBorder}`
             }
-
-
             >
                 <span id={`c${props.indexColumn}l${props.indexRow}`}
                     className="normal-span"
