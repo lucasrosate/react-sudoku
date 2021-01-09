@@ -15,21 +15,21 @@ class Sudoku implements SudokuClassInterface {
 
 
     initialNumbersCount: number = 25;
-    difficulty: string = "medium";
+    difficulty: string = "médio";
 
 
     async init() {
 
         switch (this.difficulty) {
-            case "easy":
+            case "fácil":
                 this.initialNumbersCount = 23;
                 break;
 
-            case "medium":
+            case "médio":
                 this.initialNumbersCount = 25;
                 break;
 
-            case "hard":
+            case "difícil":
                 this.initialNumbersCount = 30;
                 break;
 

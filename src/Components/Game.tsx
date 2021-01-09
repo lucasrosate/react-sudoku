@@ -122,7 +122,7 @@ const Game: React.FC = () => {
 
     // Setando o tabuleiro para os números iniciais do jogo e adicionando o EventListener após renderizar
     useEffect(() => {
-        handleDifficultyChange("medium");
+        handleDifficultyChange("médio");
         addEventKeyListener()
     }, [handleDifficultyChange, addEventKeyListener])
 
